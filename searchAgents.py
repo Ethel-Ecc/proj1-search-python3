@@ -288,6 +288,10 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        self.right = right
+        self.top = top
+
+
 
     def getStartState(self):
         """
@@ -295,6 +299,9 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
+        allCorners = (False, False, False, False)
+        start = (self.startingPosition, allCorners)
+        return start
         util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -302,6 +309,9 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
+        corners = state[1]
+        boolean = corners[0] and corners[1] and corners[2] and corners[3]
+        return boolean
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -325,8 +335,29 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            x, y = state[0]
+            holdCorners = state[1]
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+            newCorners = ()
+            nextState = (nextx, nexty)
+            if not hitsWall:
+                if nextState in self.corners:
+                    if nextState == (self.right, 1):
+                        newCorners = [True, holdCorners[1], holdCorners[2], holdCorners[3]]
+                    elif nextState == (self.right, self.top):
+                        newCorners = [holdCorners[0], True, holdCorners[2], holdCorners[3]]
+                    elif nextState == (1, self.top):
+                        newCorners = [holdCorners[0], holdCorners[1], True, holdCorners[3]]
+                    elif nextState == (1, 1):
+                        newCorners = [holdCorners[0], holdCorners[1], holdCorners[2], True]
+                    successor = ((nextState, newCorners), action, 1)
+                else:
+                    successor = ((nextState, holdCorners), action, 1)
+                successors.append(successor)
 
-        self._expanded += 1 # DO NOT CHANGE
+        self._expanded += 1  # DO NOT CHANGE
         return successors
 
     def getCostOfActions(self, actions):
@@ -360,7 +391,42 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
+    position = state[0]
+    stateCorners = state[1]
+    corners = problem.corners
+    top, right = problem.walls.height - 2, problem.walls.width - 2
+    cornerNot = []
+    for c in corners:
+        if c == (1, 1):
+            if not stateCorners[3]:
+                cornerNot.append(c)
+        if c == (1, top):
+            if not stateCorners[2]:
+                cornerNot.append(c)
+        if c == (right, top):
+            if not stateCorners[1]:
+                cornerNot.append(c)
+        if c == (right, 1):
+            if not stateCorners[0]:
+                cornerNot.append(c)
+
+    cost = 0
+    currPosition = position
+    while len(cornerNot) > 0:
+        distArr = []
+        x = 0
+        for c in range(0, len(cornerNot)):
+            corner = cornerNot[c]
+            x = x + 1
+            dist = util.manhattanDistance(currPosition, corner)
+            distArr.append(dist)
+        minDist = min(distArr)
+        cost += minDist
+        minDistI = distArr.index(minDist)
+        currPosition = cornerNot[minDistI]
+        del cornerNot[minDistI]
+
+    return cost  # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
@@ -454,7 +520,32 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    foodlist = foodGrid.asList()
+    if not foodlist:
+        return 0
+    low = foodlist[0]
+    if len(foodlist) == 1:
+        return abs(position[0] - low[0]) + abs(position[1] - low[1])
+    newCost = 0
+    cost = 0
+    costArr = []
+    newCostArr = []
+    high = foodlist[0]
+    lowCost = 0
+    for point in foodlist:
+        cost = abs(position[0] - point[0]) + abs(position[1] - point[1])
+        costArr.append(cost)
+        lowCost = min(costArr)
+    minI = costArr.index(lowCost)
+    low = foodlist[minI]
+    for point in foodlist:
+        cost = abs(low[0] - point[0]) + abs(low[1] - point[1])
+        newCostArr.append(cost)
+        highCost = max(newCostArr)
+    maxI = newCostArr.index(highCost)
+    high = foodlist[maxI]
+    return abs(low[0] - high[0]) + abs(low[1] - high[1]) + abs(position[0] - low[0]) + abs(position[1] - low[1])
+    # return 0
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
