@@ -391,6 +391,13 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+    """
+    Grading: Your heuristic must be a non-trivial non-negative consistent heuristic to be accepted.
+Make sure that your heuristic returns 0 at every goal state and never returns a negative value. Your
+solution will be accepted if the number of nodes you will expand is at most 1600. 
+Describe your heuristic in a comment on top of the cornersHeuristic method. #COMPULSORY
+    """
+
     position = state[0]
     stateCorners = state[1]
     corners = problem.corners
@@ -440,7 +447,7 @@ class FoodSearchProblem:
     food (dots) in a Pacman game.
 
     A search state in this problem is a tuple ( pacmanPosition, foodGrid ) where
-      pacmanPosition: a tuple (x,y) of integers specifying Pacman's position
+      pacman Position: a tuple (x,y) of integers specifying Pacman's position
       foodGrid:       a Grid (see game.py) of either True or False, specifying remaining food
     """
     def __init__(self, startingGameState):
@@ -520,6 +527,13 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    """
+    Fill in foodHeuristic in searchAgents.py with a consistent heuristic for the FoodSearchProblem . 
+    Remember: If your heuristic is inconsistent, you will receive no credit, so be careful! 
+    Can you solve mediumSearch in a short time? If so, we’re either very, very impressed, or your heuristic
+    is inconsistent.
+    Describe your heuristic in a comment on top of the foodHeuristic method. #COMPULSORY
+    """
     foodlist = foodGrid.asList()
     if not foodlist:
         return 0

@@ -89,7 +89,18 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    start = problem.getStartState()
+    """
+    Is the exploration order what you would have expected? 
+    Does Pacman actually go to all the explored squares on his way to the goal?
+    Hint: If you use a Stack as your data structure, the solution found by your DFS algorithm for
+    mediumMaze should have a length of 130 (provided you push successors onto the fringe in the
+    order provided by getSuccessors; you might get 246 if you push them in the reverse order).
+    Is this a least cost solution? If not, think about what depth-first search is doing wrong.
+    
+    ANTWORT:
+    
+    """
+    start = problem.getStartState()  # Initialize a variable to hold the main start
     c = problem.getStartState()
     exploredState = []
     exploredState.append(start)
@@ -115,6 +126,15 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    """
+    Does BFS find a least cost solution? If not, check your implementation.
+    Hint: If Pacman moves too slowly for you, try the option --frameTime 0 .
+    Note: If you’ve written your search code generically, your code should work equally well for the
+    eight-puzzle search problem without any changes.
+    
+    ANTWORT:
+    """
+
     start = problem.getStartState()
     exploredState = []
     exploredState.append(start)
@@ -136,9 +156,13 @@ def breadthFirstSearch(problem):
     util.raiseNotDefined()
 
 
+
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    """
+    No questions to describe.
+    """
     start = problem.getStartState()
     exploredState = []
     states = util.PriorityQueue()
@@ -171,6 +195,13 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+    """
+    You should see that A* finds the optimal solution slightly faster than uniform cost search (about
+    549 vs. 620 search nodes expanded in our implementation, but ties in priority may make your
+    numbers dier slightly). What happens on openMaze for the various search strategies?
+    
+    ANTWORT:
+    """
     start = problem.getStartState()
     exploredState = []
     states = util.PriorityQueue()
