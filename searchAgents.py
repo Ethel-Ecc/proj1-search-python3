@@ -392,12 +392,12 @@ def cornersHeuristic(state, problem):
 
     "*** YOUR CODE HERE ***"
     """
-    Grading: Your heuristic must be a non-trivial non-negative consistent heuristic to be accepted.
-Make sure that your heuristic returns 0 at every goal state and never returns a negative value. Your
-solution will be accepted if the number of nodes you will expand is at most 1600. 
-Describe your heuristic in a comment on top of the cornersHeuristic method. #COMPULSORY
-    """
-
+QUESTION: 
+    Describe your heuristic in a comment on top of the cornersHeuristic method. 
+ANSWER: 
+    The heuristic is the sum of the manhattan distances between the two following corners starting at my
+    current position to the goal node."
+"""
     position = state[0]
     stateCorners = state[1]
     corners = problem.corners
@@ -528,11 +528,11 @@ def foodHeuristic(state, problem):
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
     """
-    Fill in foodHeuristic in searchAgents.py with a consistent heuristic for the FoodSearchProblem . 
-    Remember: If your heuristic is inconsistent, you will receive no credit, so be careful! 
-    Can you solve mediumSearch in a short time? If so, we’re either very, very impressed, or your heuristic
-    is inconsistent.
-    Describe your heuristic in a comment on top of the foodHeuristic method. #COMPULSORY
+QUESTION: 
+   Describe your heuristic in a comment on top of the foodHeuristic method. 
+ANSWER: 
+   It shows the distance between the farthest and closest dot + the vertical distance to closest dot +
+    horizontal distance to farthest dot."
     """
     foodlist = foodGrid.asList()
     if not foodlist:

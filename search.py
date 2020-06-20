@@ -1,3 +1,11 @@
+"""
+---------------------------------------------------
+Course: Introduction to Artificial Intelligence - AI2020Project1
+Student Names: [1] Chinedu Ethelbert Obinna(3280240)
+               [2] Daniel Pusicha(3253050)
+Submission Date: 20 June, 2020
+----------------------------------------------------
+"""
 # search.py
 # ---------
 # Licensing Information:  You are free to use or extend these projects for
